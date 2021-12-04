@@ -1,7 +1,6 @@
-package com.spring.agendalive.service;
+package com.live.live.service;
 
-import com.spring.agendalive.document.LiveDocument;
-import com.spring.agendalive.repository.LiveRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +9,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.live.live.models.LiveDocument;
+import com.live.live.repository.LiveRepository;
+
+
 @Service
 public class LiveService {
-
     @Autowired
     LiveRepository liveRepository;
 
@@ -26,7 +28,7 @@ public class LiveService {
         }
     }
 
-    public Optional<LiveDocument> findById(String id){
+    public Optional<LiveDocument> findById(long id){
         return liveRepository.findById(id);
     }
 

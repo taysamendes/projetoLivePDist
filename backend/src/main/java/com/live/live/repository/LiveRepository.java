@@ -1,14 +1,16 @@
-package com.spring.agendalive.repository;
+package com.live.live.repository;
 
-import com.spring.agendalive.document.LiveDocument;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import java.time.LocalDateTime;
 
+import com.live.live.models.LiveDocument;
 
-public interface LiveRepository extends MongoRepository<LiveDocument, String> {
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+
+
+public interface LiveRepository extends JpaRepository<LiveDocument, Long> {
     Page<LiveDocument> findByLiveDateAfterOrderByLiveDateAsc(LocalDateTime date, Pageable pageable);
     Page<LiveDocument> findByLiveDateBeforeOrderByLiveDateDesc(LocalDateTime date, Pageable pageable);
 }

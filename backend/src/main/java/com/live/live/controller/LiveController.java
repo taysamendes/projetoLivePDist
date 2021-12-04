@@ -1,7 +1,5 @@
-package com.spring.agendalive.controller;
+package com.live.live.controller;
 
-import com.spring.agendalive.document.LiveDocument;
-import com.spring.agendalive.service.LiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,14 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import com.live.live.models.LiveDocument;
+import com.live.live.service.LiveService;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class LiveController {
-
     @Autowired
     LiveService liveService;
 
@@ -34,7 +33,7 @@ public class LiveController {
     }
 
     @GetMapping("/lives/{id}")
-    public ResponseEntity<LiveDocument> getOneLive(@PathVariable(value="id") String id){
+    public ResponseEntity<LiveDocument> getOneLive(@PathVariable(value="id") long id){
         Optional<LiveDocument> liveO = liveService.findById(id);
         if(!liveO.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,13 +43,13 @@ public class LiveController {
     }
 
     @PostMapping("/lives")
-    public ResponseEntity<LiveDocument> saveLive(@RequestBody @Valid LiveDocument live) {
+    public ResponseEntity<LiveDocument> saveLive(@RequestBody LiveDocument live) {
         live.setRegistrationDate(LocalDateTime.now());
         return new ResponseEntity<LiveDocument>(liveService.save(live), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/lives/{id}")
-    public ResponseEntity<?> deleteLive(@PathVariable(value="id") String id) {
+    public ResponseEntity<?> deleteLive(@PathVariable(value="id") long id) {
         Optional<LiveDocument> liveO = liveService.findById(id);
         if(!liveO.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,8 +60,8 @@ public class LiveController {
     }
 
     @PutMapping("/lives/{id}")
-    public ResponseEntity<LiveDocument> updateLive(@PathVariable(value="id") String id,
-                                                      @RequestBody @Valid LiveDocument liveDocument) {
+    public ResponseEntity<LiveDocument> updateLive(@PathVariable(value="id") long id,
+                                                      @RequestBody LiveDocument liveDocument) {
         Optional<LiveDocument> liveO = liveService.findById(id);
         if(!liveO.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
